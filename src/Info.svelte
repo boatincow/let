@@ -3,7 +3,7 @@
                 ←/↑ — назад<br/>
                 enter — полный экран<br/>
                 s — остановить движение<br/>
-                можно перетащить файл с панорамой<br/>
+                можно перетащить в окно файлы с панорамами<br/>
                 скролл для увеличения`;
     let divInside = "i";
 </script>
@@ -31,7 +31,7 @@
     }
 
     div:hover {
-        width: 300px;
+        width: 340px;
         height: initial;
         border-radius: 3px;
         opacity: 1;

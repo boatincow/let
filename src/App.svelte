@@ -1,11 +1,16 @@
 <script>
 	import Tool from './Tool.svelte';
 	import Info from './Info.svelte';
+	import { WEBGL } from './WebGL.js';
 
-	let way = ["img/1.jpg", "img/2.jpg", "img/3.jpg", "img/4.jpg"];
+	export let way = ["img/1.jpg"];
+	export let showInfo = true;
 
 	let preloader = document.getElementById("corePreloader");
 	preloader.parentNode.removeChild(preloader);
+
+	let glAvailable = WEBGL.isWebGLAvailable();
+	let glError = !glAvailable ? WEBGL.getErrorMessage(1).outerHTML : "";
 
 	// todo: find which fix works for scroll bug in ios
 	// src/utils/scroll-lock.js
@@ -40,6 +45,11 @@
 	}
 </style>
 
-<Tool {way}/>
-
-<Info/>
+{#if glAvailable}
+	<Tool {way}/>
+	{#if showInfo}
+		<Info/>
+	{/if}
+{:else}
+	{@html glError}
+{/if}

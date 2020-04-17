@@ -3,12 +3,12 @@
 	import {onMount, beforeUpdate} from 'svelte';
 
 	export let panoramaTexture;
+	export let panoramaImgSrc;
+	export let lonSpeed = 0.01;
 
 	let container;
 
 	var camera, scene, renderer, material;
-
-	let lonSpeed = 0.01;
 
 	var isUserInteracting = false,
         onMouseDownMouseX = 0, onMouseDownMouseY = 0,
@@ -29,15 +29,18 @@
 	beforeUpdate(()=>{
         
         if ( !inited ) {
-            init();
+			init();
+		} else if ( panoramaImgSrc ) {
+			material.map.image.src = panoramaImgSrc;
+			material.map.needsUpdate = true;
         } else if ( panoramaTexture ) {
             material.map = panoramaTexture;
-        	lon = 143;//magic number — suits best first panorama
+        	lon = 0;
         	lat = 0;
 			phi = 0;
 			theta = 0;
-        }
-
+		}
+		
 	});
 	
 	function init() {
@@ -150,7 +153,7 @@
 
 		}
 
-		lat = Math.max( - 33, Math.min( 85, lat ) );
+		lat = Math.max( - 85, Math.min( 85, lat ) );
 		phi = THREE.MathUtils.degToRad( 90 - lat );
 		theta = THREE.MathUtils.degToRad( lon );
 
