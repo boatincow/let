@@ -1,10 +1,10 @@
 <script>
-    let info = `→/↓/space — дальше<br/>
-                ←/↑ — назад<br/>
-                enter — полный экран<br/>
-                s — остановить движение<br/>
-                можно перетащить в окно файлы с панорамами<br/>
-                скролл для увеличения`;
+    let info = `→ ↓ space — next <br/>
+                ← ↑ — prev <br/>
+                enter — fullscreen <br/>
+                s - stop motion <br/>
+                you can drag and drop 360º photos here <br/>
+                scroll to zoom`;
     let divInside = "i";
 </script>
 
