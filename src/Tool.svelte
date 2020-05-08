@@ -4,14 +4,14 @@
 	import TopProgress from './TopProgress.svelte';
 	import Panorama from './Panorama.svelte';
 
-	export let way = ["img/1.jpg"];
+	// initial pack of images
+	export let way = ["img/1.jpg"]; // def image by tomazolivier https://pixabay.com/photos/landscape-mounts-360°-snow-3531355/
 
-	let panoramaTexture;
-	let panoramaImgSrc;
-	let lonSpeed = 0.01;
+	let panoramaTexture; // loading textures for initial pack
+	let panoramaImgSrc; // loading img data for drag-n-drop pack
+	let lonSpeed = 0.01; // rotation speed
 
 	let progress;
-	let container;
 	let loading = false;
 
 	let textures = [];
@@ -21,23 +21,23 @@
 		preloadTextures([...way]);
 
 		return ()=>{
-			// todo: unmount stuff
+			console.log("Tool warning: please implement unmount");
 		};
 	});
 
+	// loading initial images pack
 	function preloadTextures(list) {
 		let total = list.length;
 		
-		(function load()
-		{
+		(function load() {
 			loading = true;
 			var textureLoader = new THREE.TextureLoader();
 			textureLoader.load(list[0], (texture) => {
-				if ( imagesDrop )
+				if ( imagesDrop ) // stop loading if there was drag-n-drop
 					return;
 					
 				textures.push(texture);
-				if(textures.length == 1)
+				if (textures.length == 1)
 					panoramaTexture = texture;
 
 				list.shift();
@@ -62,19 +62,19 @@
 		document.body.style.opacity = 1;
 	}
 
+	// loading drag-n-drop data
 	function onDrop(event) {
 		let list = event.dataTransfer.files
 		let total = list.length;
 		imagesDrop = [];
 
-		(function load()
-		{
+		(function load() {
 			loading = true;
 			let reader = new FileReader();
 			reader.addEventListener( 'load', function ( event ) {
 
 				imagesDrop.push( event.target.result );
-				if (imagesDrop.length == 1)
+				if (imagesDrop.length == 1) // set first image to panorama
 					panoramaImgSrc = event.target.result;
 				
 				progress.set( (imagesDrop.length / total) * 100 );
@@ -84,8 +84,8 @@
 					loading = false;
 
 			}, false );
+			
 			reader.readAsDataURL( list[ imagesDrop.length ] );
-
 		})();
 
 		document.body.style.opacity = 1;

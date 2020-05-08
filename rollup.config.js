@@ -4,6 +4,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import copy from 'rollup-plugin-copy';
+import babel from 'rollup-plugin-babel';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -51,6 +52,32 @@ export default {
 		// Watch the `public` directory and refresh the
 		// browser on changes when not in production
 		!production && livereload('public'),
+
+		// compile to good old IE11 compatible ES5
+		production && babel({
+			extensions: [ '.js', '.mjs', '.html', '.svelte' ],
+			runtimeHelpers: true,
+			exclude: [ 'node_modules/@babel/**', 'node_modules/core-js/**' ],
+			presets: [
+			[
+				'@babel/preset-env',
+				{
+					targets: '> 0.25%, not dead',
+					useBuiltIns: 'usage',
+					corejs: 3
+				}
+			]
+			],
+			plugins: [
+			'@babel/plugin-syntax-dynamic-import',
+			[
+				'@babel/plugin-transform-runtime',
+				{
+				useESModules: true
+				}
+			]
+			]
+		}),
 
 		// If we're building for production (npm run build
 		// instead of npm run dev), minify

@@ -12,23 +12,12 @@
 	let glAvailable = WEBGL.isWebGLAvailable();
 	let glError = !glAvailable ? WEBGL.getErrorMessage(1).outerHTML : "";
 
-	// todo: find which fix works for scroll bug in ios
-	// src/utils/scroll-lock.js
-	const body = document.querySelector('body');
-	let scrollPosition = 0;
-
-    body.style.removeProperty('overflow');
-    body.style.removeProperty('position');
-    body.style.removeProperty('top');
-    body.style.removeProperty('width');
-    window.scrollTo(0, scrollPosition);
 </script>
 
 <style>
 	:global(html, body) {
 		height: 100%;
 		width: 100%;
-		/* overflow: auto; */
 		position: fixed;
 	}
 	:global(body) {

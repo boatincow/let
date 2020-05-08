@@ -31,6 +31,7 @@
     }
 
     div:hover {
+        padding: 0px 10px;
         width: 340px;
         height: initial;
         border-radius: 3px;

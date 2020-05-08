@@ -4,7 +4,7 @@ var app = new App({
 	target: document.body,
 	props: {
 		way: ["img/1.jpg"],
-		showInfo: false
+		showInfo: true
 	}
 });
 
